@@ -21,3 +21,7 @@ func (*Strike) Execute(player *player.Player, board *carrom.Board) error {
 	player.UpdateScore(1)
 	return nil
 }
+
+func (*Strike) ExecuteWithCoin(player *player.Player, board *carrom.Board, coin string) error {
+	return nil
+}

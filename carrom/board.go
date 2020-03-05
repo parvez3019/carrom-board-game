@@ -30,10 +30,11 @@ func (this *Board) PocketRedCoins(numberOfRedCoinsToPocket int) *Board {
 	return this
 }
 
-func (this *Board) DefunctCoins(numberOfBlackCoinsToDefunct int) *Board {
-	return this.PocketBlackCoins(numberOfBlackCoinsToDefunct)
-}
-
 func (this *Board) HasAllCoinsExhausted() bool {
 	return this.blackCoinsOnBoard == 0 && this.redCoinsOnBoard == 0
 }
+
+const (
+	RED   = "red"
+	BLACK = "black"
+)

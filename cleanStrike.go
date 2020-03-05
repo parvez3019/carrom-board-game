@@ -9,11 +9,6 @@ import (
 )
 
 type CleanStrike struct {
-	// players
-	// carrom-board
-	// Scoreboard
-	// Commands
-	// currentTurn
 	*carrom.Board
 	players  []*player.Player
 	commands map[string]func() command.Command
@@ -21,12 +16,12 @@ type CleanStrike struct {
 
 func NewCleanStrike(players []*player.Player, board *carrom.Board) *CleanStrike {
 	commands := map[string]func() command.Command{
-		"strike": command.NewStrike,
-		"multi-strike":   command.NewMultiStrike,
-		"red-strike":     command.NewRedStrike,
-		"striker-strike": command.NewStrikerStrike,
-		"defunct-coin":   command.NewDefunctCoin,
-		"none":           command.NewNone,
+		STRIKE:        command.NewStrike,
+		MULTISTRIKE:   command.NewMultiStrike,
+		REDSTRIKE:     command.NewRedStrike,
+		STRIKERSTRIKE: command.NewStrikerStrike,
+		DEFUNCTCOIN:   command.NewDefunctCoin,
+		NONE:          command.NewNone,
 	}
 	return &CleanStrike{
 		Board:    board,
@@ -35,13 +30,18 @@ func NewCleanStrike(players []*player.Player, board *carrom.Board) *CleanStrike 
 	}
 }
 
-func (this *CleanStrike) Play(player *player.Player, strike string) error {
+func (this *CleanStrike) Play(player *player.Player, strike string, coin string) error {
 	command := this.commands[strike]
 	if command == nil {
-		return errors.New("Invalid Command")
+		return errors.New("invalid command")
 	}
 
-	err := command().Execute(player, this.Board)
+	var err error
+	if strike == DEFUNCTCOIN {
+		err = command().ExecuteWithCoin(player, this.Board, coin)
+	} else {
+		err = command().Execute(player, this.Board)
+	}
 	if err != nil {
 		return err
 	}

@@ -2,9 +2,10 @@ package main
 
 const (
 	STRIKE        = "strike"
-	multiStrike   = "multi-strike"
-	redStrike     = "red-strike"
-	strikerStrike = "striker-strike"
-	defunctCoin   = "defunct-coin"
-	none          = "none"
+	MULTISTRIKE   = "multi-strike"
+	REDSTRIKE     = "red-strike"
+	STRIKERSTRIKE = "striker-strike"
+	DEFUNCTCOIN   = "defunct-coin"
+	NONE          = "none"
 )
+

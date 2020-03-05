@@ -16,3 +16,7 @@ func (*StrikerStrike) Execute(player *player.Player, board *carrom.Board) error 
 	player.Foul()
 	return nil
 }
+
+func (*StrikerStrike) ExecuteWithCoin(player *player.Player, board *carrom.Board, coin string) error {
+	return nil
+}

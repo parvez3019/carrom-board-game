@@ -21,3 +21,7 @@ func (*MultiStrike) Execute(player *player.Player, board *carrom.Board) error {
 	player.UpdateScore(2)
 	return nil
 }
+
+func (*MultiStrike) ExecuteWithCoin(player *player.Player, board *carrom.Board, coin string) error {
+	return nil
+}

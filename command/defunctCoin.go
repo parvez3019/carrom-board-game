@@ -14,10 +14,19 @@ func NewDefunctCoin() Command {
 }
 
 func (*DefunctCoin) Execute(player *player.Player, board *carrom.Board) error {
-	if !board.HasBlackCoins(1) {
+	return nil
+}
+
+func (*DefunctCoin) ExecuteWithCoin(player *player.Player, board *carrom.Board, coin string) error {
+	if coin == carrom.RED && board.HasRedCoins(1) {
+		board.PocketRedCoins(1)
+	} else if coin == carrom.BLACK && board.HasBlackCoins(1) {
+		board.PocketBlackCoins(1)
+	} else if coin == carrom.RED || coin == carrom.BLACK {
 		return errors.New("not enough coins on the board")
+	} else {
+		return errors.New("invalid coin")
 	}
-	board.DefunctCoins(1)
 	player.UpdateScore(-2)
 	return nil
 }
