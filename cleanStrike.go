@@ -28,7 +28,7 @@ func NewCleanStrike(board *carrom.Board) *CleanStrike {
 	}
 }
 
-func (this *CleanStrike) Play(player *player.Player, strike string, optionalCoin string) error {
+func (this *CleanStrike) Move(player *player.Player, strike string, optionalCoin string) error {
 	command := this.commands[strike]
 	if command == nil {
 		return errors.New("invalid command")

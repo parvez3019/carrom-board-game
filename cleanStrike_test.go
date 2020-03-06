@@ -19,8 +19,8 @@ func setUpGame(blackCoins int, redCoins int) (*CleanStrike, *player.Player, *pla
 func TestCleanStrike_ShouldReturnGameAsDrawWithScore2and0As0_WhenPlayer1StrikeTwiceInRow(t *testing.T) {
 	game, player1, player2 := setUpGame(2, 0)
 
-	game.Play(player1, STRIKE, "")
-	game.Play(player1, STRIKE, "")
+	game.Move(player1, STRIKE, "")
+	game.Move(player1, STRIKE, "")
 
 	assert.Equal(t, player1.Score(), 2)
 	assert.Equal(t, player2.Score(), 0)
@@ -30,17 +30,17 @@ func TestCleanStrike_ShouldReturnGameAsDrawWithScore2and0As0_WhenPlayer1StrikeTw
 func TestCleanStrike_ShouldReturnAsDrawEvenWith3PlusLeadForOnePlaceIfLacksByMin5Constraint_WhenPlayer1score1AndPlayer2Score4(t *testing.T) {
 	game, player1, player2 := setUpGame(9, 1)
 
-	game.Play(player1, STRIKE, "") // P1: 1
-	game.Play(player2, STRIKE, "") // P2: 1
+	game.Move(player1, STRIKE, "") // P1: 1
+	game.Move(player2, STRIKE, "") // P2: 1
 
-	game.Play(player1, MULTISTRIKE, "") // P1: 3
-	game.Play(player2, REDSTRIKE, "")   // P2: 4
+	game.Move(player1, MULTISTRIKE, "") // P1: 3
+	game.Move(player2, REDSTRIKE, "")   // P2: 4
 
-	game.Play(player1, STRIKERSTRIKE, "") // P1: 2
-	game.Play(player2, MULTISTRIKE, "")   // P2: 6
+	game.Move(player1, STRIKERSTRIKE, "") // P1: 2
+	game.Move(player2, MULTISTRIKE, "")   // P2: 6
 
-	game.Play(player1, NONE, "")                  // P1: 1
-	game.Play(player2, DEFUNCTCOIN, carrom.BLACK) // P2: 4
+	game.Move(player1, NONE, "")                  // P1: 1
+	game.Move(player2, DEFUNCTCOIN, carrom.BLACK) // P2: 4
 
 	assert.Equal(t, player1.Score(), 1)
 	assert.Equal(t, player2.Score(), 4)
@@ -51,20 +51,20 @@ func TestCleanStrike_ShouldReturnAsDrawEvenWith3PlusLeadForOnePlaceIfLacksByMin5
 func TestCleanStrike_ShouldReturnAsDrawPlayer2AsWinner_WhenPlayer1score1AndPlayer2Score5(t *testing.T) {
 	game, player1, player2 := setUpGame(9, 1)
 
-	game.Play(player1, STRIKE, "") // P1: 1
-	game.Play(player2, STRIKE, "") // P2: 1
+	game.Move(player1, STRIKE, "") // P1: 1
+	game.Move(player2, STRIKE, "") // P2: 1
 
-	game.Play(player1, MULTISTRIKE, "") // P1: 3
-	game.Play(player2, REDSTRIKE, "")   // P2: 4
+	game.Move(player1, MULTISTRIKE, "") // P1: 3
+	game.Move(player2, REDSTRIKE, "")   // P2: 4
 
-	game.Play(player1, STRIKERSTRIKE, "") // P1: 2
-	game.Play(player2, MULTISTRIKE, "")   // P2: 6
+	game.Move(player1, STRIKERSTRIKE, "") // P1: 2
+	game.Move(player2, MULTISTRIKE, "")   // P2: 6
 
-	game.Play(player1, NONE, "")                  // P1: 1
-	game.Play(player2, DEFUNCTCOIN, carrom.BLACK) // P2: 4
+	game.Move(player1, NONE, "")                  // P1: 1
+	game.Move(player2, DEFUNCTCOIN, carrom.BLACK) // P2: 4
 
-	game.Play(player1, STRIKE, "") // P1: 2
-	game.Play(player2, STRIKE, "") // P2: 5
+	game.Move(player1, STRIKE, "") // P1: 2
+	game.Move(player2, STRIKE, "") // P2: 5
 
 	assert.Equal(t, player1.Score(), 2)
 	assert.Equal(t, player2.Score(), 5)

@@ -4,6 +4,6 @@ import "fmt"
 
 func main() {
 	//cs := CleanStrike{}
-	//cs.Play()
+	//cs.Move()
 	fmt.Print("heree")
 }
