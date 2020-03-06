@@ -4,7 +4,7 @@ import (
 	"clean-strike/player"
 	"fmt"
 	"clean-strike/carrom"
-	"clean-strike/cleanStrike"
+	"clean-strike/game"
 )
 
 func main() {
@@ -12,8 +12,8 @@ func main() {
 	player1 := player.NewPlayer("Player 1")
 	player2 := player.NewPlayer("Player 2")
 
-	cs := cleanStrike.NewGame(board)
-	gameRunner := cleanStrike.NewGameRunner(cs)
+	cs := game.NewGame(board)
+	gameRunner := game.NewGameRunner(cs)
 
 	result := gameRunner.Play(player1, player2)
 

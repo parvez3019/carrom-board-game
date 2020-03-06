@@ -1,4 +1,4 @@
-package cleanStrike
+package game
 
 import (
 	"clean-strike/carrom"
