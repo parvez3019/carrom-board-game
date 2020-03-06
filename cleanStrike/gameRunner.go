@@ -4,6 +4,7 @@ import (
 	"clean-strike/player"
 	"fmt"
 	"strings"
+	"clean-strike/constants"
 )
 
 type GameRunner struct {
@@ -23,10 +24,10 @@ func (g *GameRunner) Play(player1 *player.Player, player2 *player.Player) string
 		}
 		g.SetCurrentPlayer(currentPlayer)
 		err = g.makeMove()
-		if err != nil && err.Error() == NotEnoughCoinsError {
-			fmt.Println(NotEnoughCoinsErrorMessage)
+		if err != nil && err.Error() == constants.NotEnoughCoinsError {
+			fmt.Println(constants.NotEnoughCoinsErrorMessage)
 		} else if err != nil {
-			fmt.Println(InvalidCommandErrorMessage)
+			fmt.Println(constants.InvalidCommandErrorMessage)
 		}
 	}
 	return g.Result(player1, player2)
@@ -52,7 +53,7 @@ func (g *GameRunner) getInputCommandAndOptionCoinColor() (string, string, error)
 	if err != nil {
 		return inputCommand, optionalCoin, err
 	}
-	if inputCommandMap[inputCommand] == DefunctCoin {
+	if inputCommandMap[inputCommand] == constants.DefunctCoin {
 		_, err := fmt.Scanln(&optionalCoin)
 		if err != nil {
 			return inputCommand, optionalCoin, err
@@ -83,10 +84,10 @@ func (g *GameRunner) getNextPlayer(current *player.Player, p1 *player.Player, p2
 }
 
 var inputCommandMap = map[string]string{
-	"1": Strike,
-	"2": MultiStrike,
-	"3": RedStrike,
-	"4": StrikerStrike,
-	"5": DefunctCoin,
-	"6": None,
+	"1": constants.Strike,
+	"2": constants.MultiStrike,
+	"3": constants.RedStrike,
+	"4": constants.StrikerStrike,
+	"5": constants.DefunctCoin,
+	"6": constants.None,
 }

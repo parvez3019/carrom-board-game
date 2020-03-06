@@ -4,7 +4,7 @@ import (
 	"clean-strike/player"
 	"clean-strike/carrom"
 	"errors"
-	"clean-strike/cleanStrike"
+	"clean-strike/constants"
 )
 
 type RedStrike struct {
@@ -16,7 +16,7 @@ func NewRedStrike() Command {
 
 func (*RedStrike) Execute(player *player.Player, board *carrom.Board) error {
 	if !board.HasRedCoins(1) {
-		return errors.New(cleanStrike.NotEnoughCoinsError)
+		return errors.New(constants.NotEnoughCoinsError)
 	}
 	board.RemoveNRedCoins(1)
 	player.UpdateScore(3)

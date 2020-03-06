@@ -1,4 +1,4 @@
-package cleanStrike
+package constants
 
 const (
 	Strike        = "strike"

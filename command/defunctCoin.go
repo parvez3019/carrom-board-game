@@ -4,7 +4,7 @@ import (
 	"clean-strike/player"
 	"clean-strike/carrom"
 	"errors"
-	"clean-strike/cleanStrike"
+	"clean-strike/constants"
 )
 
 type DefunctCoin struct {
@@ -24,9 +24,9 @@ func (*DefunctCoin) ExecuteWithCoin(player *player.Player, board *carrom.Board, 
 	} else if coin == carrom.BLACK && board.HasBlackCoins(1) {
 		board.RemoveNBlackCoins(1)
 	} else if coin == carrom.RED || coin == carrom.BLACK {
-		return errors.New(cleanStrike.NotEnoughCoinsError)
+		return errors.New(constants.NotEnoughCoinsError)
 	} else {
-		return errors.New(cleanStrike.InvalidCoinError)
+		return errors.New(constants.InvalidCoinError)
 	}
 	player.UpdateScore(-2)
 	return nil

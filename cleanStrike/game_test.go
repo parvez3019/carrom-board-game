@@ -5,6 +5,7 @@ import (
 	"clean-strike/player"
 	"testing"
 	"github.com/magiconair/properties/assert"
+	"clean-strike/constants"
 )
 
 func setUpGame(blackCoins int, redCoins int) (*Game, *player.Player, *player.Player,) {
@@ -20,8 +21,8 @@ func TestCleanStrike_ShouldReturnGameAsDrawWithScore2and0As0_WhenPlayer1StrikeTw
 	game, player1, player2 := setUpGame(2, 0)
 
 	game.SetCurrentPlayer(player1)
-	game.Move(Strike, "")
-	game.Move(Strike, "")
+	game.Move(constants.Strike, "")
+	game.Move(constants.Strike, "")
 
 	assert.Equal(t, player1.Score(), 2)
 	assert.Equal(t, player2.Score(), 0)
@@ -32,67 +33,66 @@ func TestCleanStrike_ShouldReturnAsDrawEvenWith3PlusLeadForOnePlaceIfLacksByMin5
 	game, player1, player2 := setUpGame(9, 1)
 
 	game.SetCurrentPlayer(player1)
-	game.Move(Strike, "") // P1: 1
+	game.Move(constants.Strike, "") // P1: 1
 
 	game.SetCurrentPlayer(player2)
-	game.Move(Strike, "") // P2: 1
+	game.Move(constants.Strike, "") // P2: 1
 
 	game.SetCurrentPlayer(player1)
-	game.Move(MultiStrike, "") // P1: 3
+	game.Move(constants.MultiStrike, "") // P1: 3
 
 	game.SetCurrentPlayer(player2)
-	game.Move(RedStrike, "") // P2: 4
+	game.Move(constants.RedStrike, "") // P2: 4
 
 	game.SetCurrentPlayer(player1)
-	game.Move(StrikerStrike, "")
+	game.Move(constants.StrikerStrike, "")
 
-	game.SetCurrentPlayer(player2) // P1: 2
-	game.Move(MultiStrike, "")     // P2: 6
+	game.SetCurrentPlayer(player2)       // P1: 2
+	game.Move(constants.MultiStrike, "") // P2: 6
 
 	game.SetCurrentPlayer(player1)
-	game.Move(None, "") // P1: 1
+	game.Move(constants.None, "") // P1: 1
 
 	game.SetCurrentPlayer(player2)
-	game.Move(DefunctCoin, carrom.BLACK) // P2: 4
+	game.Move(constants.DefunctCoin, carrom.BLACK) // P2: 4
 
 	assert.Equal(t, player1.Score(), 1)
 	assert.Equal(t, player2.Score(), 4)
 	assert.Equal(t, game.Result(player1, player2), "Game is draw")
 }
 
-
 func TestCleanStrike_ShouldReturnAsDrawPlayer2AsWinner_WhenPlayer1score1AndPlayer2Score5(t *testing.T) {
 	game, player1, player2 := setUpGame(9, 1)
 
 	game.SetCurrentPlayer(player1)
-	game.Move(Strike, "") // P1: 1
+	game.Move(constants.Strike, "") // P1: 1
 
 	game.SetCurrentPlayer(player2)
-	game.Move(Strike, "") // P2: 1
+	game.Move(constants.Strike, "") // P2: 1
 
 	game.SetCurrentPlayer(player1)
-	game.Move(MultiStrike, "") // P1: 3
+	game.Move(constants.MultiStrike, "") // P1: 3
 
 	game.SetCurrentPlayer(player2)
-	game.Move(RedStrike, "") // P2: 4
+	game.Move(constants.RedStrike, "") // P2: 4
 
 	game.SetCurrentPlayer(player1)
-	game.Move(StrikerStrike, "") // P1: 2
+	game.Move(constants.StrikerStrike, "") // P1: 2
 
 	game.SetCurrentPlayer(player2)
-	game.Move(MultiStrike, "") // P2: 6
+	game.Move(constants.MultiStrike, "") // P2: 6
 
 	game.SetCurrentPlayer(player1)
-	game.Move(None, "") // P1: 1
+	game.Move(constants.None, "") // P1: 1
 
 	game.SetCurrentPlayer(player2)
-	game.Move(DefunctCoin, carrom.BLACK) // P2: 4
+	game.Move(constants.DefunctCoin, carrom.BLACK) // P2: 4
 
 	game.SetCurrentPlayer(player1)
-	game.Move(Strike, "") // P1: 2
+	game.Move(constants.Strike, "") // P1: 2
 
 	game.SetCurrentPlayer(player2)
-	game.Move(Strike, "") // P2: 5
+	game.Move(constants.Strike, "") // P2: 5
 
 	assert.Equal(t, player1.Score(), 2)
 	assert.Equal(t, player2.Score(), 5)

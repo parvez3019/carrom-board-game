@@ -3,6 +3,7 @@ package cleanStrike
 import (
 	"clean-strike/command"
 	"clean-strike/carrom"
+	"clean-strike/constants"
 	"github.com/go-errors/errors"
 	"clean-strike/player"
 	"fmt"
@@ -16,16 +17,16 @@ type Game struct {
 
 func NewGame(board *carrom.Board) *Game {
 	commands := map[string]func() command.Command{
-		Strike:        command.NewStrike,
-		MultiStrike:   command.NewMultiStrike,
-		RedStrike:     command.NewRedStrike,
-		StrikerStrike: command.NewStrikerStrike,
-		DefunctCoin:   command.NewDefunctCoin,
-		None:          command.NewNone,
+		constants.Strike:        command.NewStrike,
+		constants.MultiStrike:   command.NewMultiStrike,
+		constants.RedStrike:     command.NewRedStrike,
+		constants.StrikerStrike: command.NewStrikerStrike,
+		constants.DefunctCoin:   command.NewDefunctCoin,
+		constants.None:          command.NewNone,
 	}
 	return &Game{
-		Board:         board,
-		commands:      commands,
+		Board:    board,
+		commands: commands,
 	}
 }
 func (g *Game) SetCurrentPlayer(player *player.Player) *Game {
@@ -40,7 +41,7 @@ func (g *Game) Move(strike string, optionalCoin string) error {
 	}
 
 	var err error
-	if strike == DefunctCoin {
+	if strike == constants.DefunctCoin {
 		err = command().ExecuteWithCoin(g.currentPlayer, g.Board, optionalCoin)
 	} else {
 		err = command().Execute(g.currentPlayer, g.Board)
@@ -51,7 +52,7 @@ func (g *Game) Move(strike string, optionalCoin string) error {
 	return nil
 }
 
-func (g *Game) CurrentPlayerName() string  {
+func (g *Game) CurrentPlayerName() string {
 	return g.currentPlayer.Name()
 }
 
