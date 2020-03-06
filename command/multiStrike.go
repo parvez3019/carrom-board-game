@@ -4,6 +4,7 @@ import (
 	"clean-strike/player"
 	"clean-strike/carrom"
 	"errors"
+	"clean-strike/cleanStrike"
 )
 
 type MultiStrike struct {
@@ -15,9 +16,9 @@ func NewMultiStrike() Command {
 
 func (*MultiStrike) Execute(player *player.Player, board *carrom.Board) error {
 	if !board.HasBlackCoins(2) {
-		return errors.New("not enough coins on the board")
+		return errors.New(cleanStrike.NotEnoughCoinsError)
 	}
-	board.PocketBlackCoins(2)
+	board.RemoveNBlackCoins(2)
 	player.UpdateScore(2)
 	return nil
 }

@@ -4,6 +4,7 @@ import (
 	"clean-strike/player"
 	"clean-strike/carrom"
 	"github.com/go-errors/errors"
+	"clean-strike/cleanStrike"
 )
 
 type Strike struct {
@@ -15,9 +16,9 @@ func NewStrike() Command {
 
 func (*Strike) Execute(player *player.Player, board *carrom.Board) error {
 	if !board.HasBlackCoins(1) {
-		return errors.New("not enough coins on the board")
+		return errors.New(cleanStrike.NotEnoughCoinsError)
 	}
-	board.PocketBlackCoins(1)
+	board.RemoveNBlackCoins(1)
 	player.UpdateScore(1)
 	return nil
 }

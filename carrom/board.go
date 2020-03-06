@@ -20,12 +20,12 @@ func (b *Board) HasRedCoins(numberOfCoins int) bool {
 	return b.redCoinsOnBoard >= numberOfCoins
 }
 
-func (b *Board) PocketBlackCoins(numberOfBlackCoinsToPocket int) *Board {
+func (b *Board) RemoveNBlackCoins(numberOfBlackCoinsToPocket int) *Board {
 	b.blackCoinsOnBoard -= numberOfBlackCoinsToPocket
 	return b
 }
 
-func (b *Board) PocketRedCoins(numberOfRedCoinsToPocket int) *Board {
+func (b *Board) RemoveNRedCoins(numberOfRedCoinsToPocket int) *Board {
 	b.redCoinsOnBoard -= numberOfRedCoinsToPocket
 	return b
 }

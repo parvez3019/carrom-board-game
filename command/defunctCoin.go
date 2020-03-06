@@ -4,6 +4,7 @@ import (
 	"clean-strike/player"
 	"clean-strike/carrom"
 	"errors"
+	"clean-strike/cleanStrike"
 )
 
 type DefunctCoin struct {
@@ -19,13 +20,13 @@ func (*DefunctCoin) Execute(player *player.Player, board *carrom.Board) error {
 
 func (*DefunctCoin) ExecuteWithCoin(player *player.Player, board *carrom.Board, coin string) error {
 	if coin == carrom.RED && board.HasRedCoins(1) {
-		board.PocketRedCoins(1)
+		board.RemoveNRedCoins(1)
 	} else if coin == carrom.BLACK && board.HasBlackCoins(1) {
-		board.PocketBlackCoins(1)
+		board.RemoveNBlackCoins(1)
 	} else if coin == carrom.RED || coin == carrom.BLACK {
-		return errors.New("not enough coins on the board")
+		return errors.New(cleanStrike.NotEnoughCoinsError)
 	} else {
-		return errors.New("invalid coin")
+		return errors.New(cleanStrike.InvalidCoinError)
 	}
 	player.UpdateScore(-2)
 	return nil
