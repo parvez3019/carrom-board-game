@@ -1,9 +1,21 @@
 package main
 
-import "fmt"
+import (
+	"clean-strike/player"
+	"fmt"
+	"clean-strike/carrom"
+	"clean-strike/cleanStrike"
+)
 
 func main() {
-	//cs := CleanStrike{}
-	//cs.Move()
-	fmt.Print("heree")
+	board := carrom.NewCarromBoard(9, 1)
+	player1 := player.NewPlayer("Player 1")
+	player2 := player.NewPlayer("Player 2")
+
+	cs := cleanStrike.NewCleanStrike(board)
+	gameRunner := cleanStrike.NewGameRunner(cs)
+
+	result := gameRunner.Play(player1, player2)
+
+	fmt.Println(result)
 }

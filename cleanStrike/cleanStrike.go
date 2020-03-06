@@ -1,4 +1,4 @@
-package main
+package cleanStrike
 
 import (
 	"clean-strike/command"
@@ -46,6 +46,10 @@ func (this *CleanStrike) Move(player *player.Player, strike string, optionalCoin
 	return nil
 }
 
+func (this *CleanStrike) CanContinue() bool  {
+	return !this.HasAllCoinsExhausted()
+}
+
 func (this *CleanStrike) Result(player1 *player.Player, player2 *player.Player) string {
 	score1 := player1.Score()
 	score2 := player2.Score()
@@ -60,4 +64,4 @@ func (this *CleanStrike) Result(player1 *player.Player, player2 *player.Player) 
 }
 
 const GameDrawString = "Game is draw"
-const GameResultStringFormatter = "%s won the game. Final Score: %d-%d"
+const GameResultStringFormatter = "%s won the game. Final Score: %d : %d"

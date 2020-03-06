@@ -1,4 +1,4 @@
-package main
+package cleanStrike
 
 import (
 	"clean-strike/carrom"

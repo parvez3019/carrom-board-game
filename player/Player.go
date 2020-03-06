@@ -1,13 +1,16 @@
 package player
 
+import "github.com/google/uuid"
+
 type Player struct {
+	id                  string
 	name                string
 	score               int
 	successiveFoulCount int
 }
 
 func NewPlayer(name string) *Player {
-	return &Player{name: name}
+	return &Player{name: name, id: uuid.New().String()}
 }
 
 func (this *Player) UpdateScore(pointsScored int) *Player {
@@ -33,4 +36,8 @@ func (this *Player) Name() string {
 
 func (this *Player) Score() int {
 	return this.score
+}
+
+func (this *Player) Id() string {
+	return this.id
 }
