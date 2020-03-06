@@ -23,17 +23,13 @@ func (g *GameRunner) Play(player1 *player.Player, player2 *player.Player) string
 			currentPlayer = g.getNextPlayer(currentPlayer, player1, player2)
 		}
 		g.SetCurrentPlayer(currentPlayer)
-		err = g.makeMove()
-		if err != nil && err.Error() == constants.NotEnoughCoinsError {
-			fmt.Println(constants.NotEnoughCoinsErrorMessage)
-		} else if err != nil {
-			fmt.Println(constants.InvalidCommandErrorMessage)
-		}
+		err = g.getInputAndMakeMove()
+		printError(err)
 	}
 	return g.Result(player1, player2)
 }
 
-func (g *GameRunner) makeMove() error {
+func (g *GameRunner) getInputAndMakeMove() error {
 	commandChooseByPlayer, optionalCoinInfo, err := g.getInputFromUser()
 	if err != nil {
 		return err
@@ -51,26 +47,30 @@ func (g *GameRunner) getInputCommandAndOptionCoinColor() (string, string, error)
 	var optionalCoin string
 	_, err := fmt.Scanln(&inputCommand)
 	if err != nil {
-		return inputCommand, optionalCoin, err
+		return "", "", err
 	}
 	if inputCommandMap[inputCommand] == constants.DefunctCoin {
-		_, err := fmt.Scanln(&optionalCoin)
+		optionalCoin, err = getOptionalCoinUserInput(optionalCoin)
 		if err != nil {
-			return inputCommand, optionalCoin, err
+			return "", "", err
 		}
-		optionalCoin = strings.Trim(strings.ToLower(optionalCoin), " ")
 	}
 	return inputCommand, optionalCoin, err
 }
 
+func getOptionalCoinUserInput(optionalCoin string) (string, error) {
+	fmt.Println("Choose black or red to defunct")
+	_, err := fmt.Scanln(&optionalCoin)
+	if err != nil {
+		return "", err
+	}
+	optionalCoin = strings.Trim(strings.ToLower(optionalCoin), " ")
+	return optionalCoin, nil
+}
+
 func (g *GameRunner) printDisplayInputMessage() {
 	fmt.Println(fmt.Sprintf("%s : Choose an outcome from the list below", g.CurrentPlayerName()))
-	fmt.Println("1. Strike")
-	fmt.Println("2. MultiStrike")
-	fmt.Println("3. Red strike")
-	fmt.Println("4. Striker strike")
-	fmt.Println("5. Defunct coin")
-	fmt.Println("6. None")
+	fmt.Println("1. Strike \n2. MultiStrike \n3. Red strike \n4. Striker strike \n5. Defunct coin \n6.None")
 }
 
 func (g *GameRunner) getNextPlayer(current *player.Player, p1 *player.Player, p2 *player.Player) *player.Player {
@@ -82,6 +82,15 @@ func (g *GameRunner) getNextPlayer(current *player.Player, p1 *player.Player, p2
 	}
 	return p1
 }
+
+func printError(err error) {
+	if err != nil && err.Error() == constants.NotEnoughCoinsError {
+		fmt.Println(constants.NotEnoughCoinsErrorMessage)
+	} else if err != nil {
+		fmt.Println(constants.InvalidCommandErrorMessage)
+	}
+}
+
 
 var inputCommandMap = map[string]string{
 	"1": constants.Strike,
