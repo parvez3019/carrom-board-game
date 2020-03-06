@@ -16,12 +16,12 @@ type Game struct {
 
 func NewGame(board *carrom.Board) *Game {
 	commands := map[string]func() command.Command{
-		STRIKE:        command.NewStrike,
-		MULTISTRIKE:   command.NewMultiStrike,
-		REDSTRIKE:     command.NewRedStrike,
-		STRIKERSTRIKE: command.NewStrikerStrike,
-		DEFUNCTCOIN:   command.NewDefunctCoin,
-		NONE:          command.NewNone,
+		Strike:        command.NewStrike,
+		MultiStrike:   command.NewMultiStrike,
+		RedStrike:     command.NewRedStrike,
+		StrikerStrike: command.NewStrikerStrike,
+		DefunctCoin:   command.NewDefunctCoin,
+		None:          command.NewNone,
 	}
 	return &Game{
 		Board:         board,
@@ -40,7 +40,7 @@ func (g *Game) Move(strike string, optionalCoin string) error {
 	}
 
 	var err error
-	if strike == DEFUNCTCOIN {
+	if strike == DefunctCoin {
 		err = command().ExecuteWithCoin(g.currentPlayer, g.Board, optionalCoin)
 	} else {
 		err = command().Execute(g.currentPlayer, g.Board)

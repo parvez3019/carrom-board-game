@@ -52,7 +52,7 @@ func (g *GameRunner) getInputCommandAndOptionCoinColor() (string, string, error)
 	if err != nil {
 		return inputCommand, optionalCoin, err
 	}
-	if inputCommandMap[inputCommand] == DEFUNCTCOIN {
+	if inputCommandMap[inputCommand] == DefunctCoin {
 		_, err := fmt.Scanln(&optionalCoin)
 		if err != nil {
 			return inputCommand, optionalCoin, err
@@ -65,7 +65,7 @@ func (g *GameRunner) getInputCommandAndOptionCoinColor() (string, string, error)
 func (g *GameRunner) printDisplayInputMessage() {
 	fmt.Println(fmt.Sprintf("%s : Choose an outcome from the list below", g.CurrentPlayerName()))
 	fmt.Println("1. Strike")
-	fmt.Println("2. Multistrike")
+	fmt.Println("2. MultiStrike")
 	fmt.Println("3. Red strike")
 	fmt.Println("4. Striker strike")
 	fmt.Println("5. Defunct coin")
@@ -83,10 +83,10 @@ func (g *GameRunner) getNextPlayer(current *player.Player, p1 *player.Player, p2
 }
 
 var inputCommandMap = map[string]string{
-	"1": STRIKE,
-	"2": MULTISTRIKE,
-	"3": REDSTRIKE,
-	"4": STRIKERSTRIKE,
-	"5": DEFUNCTCOIN,
-	"6": NONE,
+	"1": Strike,
+	"2": MultiStrike,
+	"3": RedStrike,
+	"4": StrikerStrike,
+	"5": DefunctCoin,
+	"6": None,
 }

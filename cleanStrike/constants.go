@@ -1,12 +1,12 @@
 package cleanStrike
 
 const (
-	STRIKE        = "strike"
-	MULTISTRIKE   = "multi-strike"
-	REDSTRIKE     = "red-strike"
-	STRIKERSTRIKE = "striker-strike"
-	DEFUNCTCOIN   = "defunct-coin"
-	NONE          = "none"
+	Strike        = "strike"
+	MultiStrike   = "multi-strike"
+	RedStrike     = "red-strike"
+	StrikerStrike = "striker-strike"
+	DefunctCoin   = "defunct-coin"
+	None          = "none"
 )
 
 const NotEnoughCoinsError = "not enough coins on the board"
