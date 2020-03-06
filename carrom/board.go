@@ -12,26 +12,26 @@ func NewCarromBoard(numberOfBlackCoins int, numberOfRedCoins int) *Board {
 	}
 }
 
-func (this *Board) HasBlackCoins(numberOfCoins int) bool {
-	return this.blackCoinsOnBoard >= numberOfCoins
+func (b *Board) HasBlackCoins(numberOfCoins int) bool {
+	return b.blackCoinsOnBoard >= numberOfCoins
 }
 
-func (this *Board) HasRedCoins(numberOfCoins int) bool {
-	return this.redCoinsOnBoard >= numberOfCoins
+func (b *Board) HasRedCoins(numberOfCoins int) bool {
+	return b.redCoinsOnBoard >= numberOfCoins
 }
 
-func (this *Board) PocketBlackCoins(numberOfBlackCoinsToPocket int) *Board {
-	this.blackCoinsOnBoard -= numberOfBlackCoinsToPocket
-	return this
+func (b *Board) PocketBlackCoins(numberOfBlackCoinsToPocket int) *Board {
+	b.blackCoinsOnBoard -= numberOfBlackCoinsToPocket
+	return b
 }
 
-func (this *Board) PocketRedCoins(numberOfRedCoinsToPocket int) *Board {
-	this.redCoinsOnBoard -= numberOfRedCoinsToPocket
-	return this
+func (b *Board) PocketRedCoins(numberOfRedCoinsToPocket int) *Board {
+	b.redCoinsOnBoard -= numberOfRedCoinsToPocket
+	return b
 }
 
-func (this *Board) HasAllCoinsExhausted() bool {
-	return this.blackCoinsOnBoard == 0 && this.redCoinsOnBoard == 0
+func (b *Board) HasAllCoinsExhausted() bool {
+	return b.blackCoinsOnBoard == 0 && b.redCoinsOnBoard == 0
 }
 
 const (

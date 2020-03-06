@@ -28,22 +28,22 @@ func NewGame(board *carrom.Board) *Game {
 		commands:      commands,
 	}
 }
-func (this *Game) SetCurrentPlayer(player *player.Player) *Game {
-	this.currentPlayer = player
-	return this
+func (g *Game) SetCurrentPlayer(player *player.Player) *Game {
+	g.currentPlayer = player
+	return g
 }
 
-func (this *Game) Move(strike string, optionalCoin string) error {
-	command := this.commands[strike]
+func (g *Game) Move(strike string, optionalCoin string) error {
+	command := g.commands[strike]
 	if command == nil {
 		return errors.New("invalid command")
 	}
 
 	var err error
 	if strike == DEFUNCTCOIN {
-		err = command().ExecuteWithCoin(this.currentPlayer, this.Board, optionalCoin)
+		err = command().ExecuteWithCoin(g.currentPlayer, g.Board, optionalCoin)
 	} else {
-		err = command().Execute(this.currentPlayer, this.Board)
+		err = command().Execute(g.currentPlayer, g.Board)
 	}
 	if err != nil {
 		return err
@@ -51,15 +51,15 @@ func (this *Game) Move(strike string, optionalCoin string) error {
 	return nil
 }
 
-func (this *Game) CurrentPlayerName() string  {
-	return this.currentPlayer.Name()
+func (g *Game) CurrentPlayerName() string  {
+	return g.currentPlayer.Name()
 }
 
-func (this *Game) CanContinue() bool {
-	return !this.HasAllCoinsExhausted()
+func (g *Game) CanContinue() bool {
+	return !g.HasAllCoinsExhausted()
 }
 
-func (this *Game) Result(player1 *player.Player, player2 *player.Player) string {
+func (g *Game) Result(player1 *player.Player, player2 *player.Player) string {
 	score1 := player1.Score()
 	score2 := player2.Score()
 

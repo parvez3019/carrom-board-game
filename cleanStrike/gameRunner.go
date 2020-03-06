@@ -14,38 +14,38 @@ func NewGameRunner(strike *Game) *GameRunner {
 	return &GameRunner{Game: strike}
 }
 
-func (this *GameRunner) Play(player1 *player.Player, player2 *player.Player) string {
+func (g *GameRunner) Play(player1 *player.Player, player2 *player.Player) string {
 	var err error
 	var currentPlayer *player.Player
-	for this.CanContinue() {
+	for g.CanContinue() {
 		if err == nil {
-			currentPlayer = this.getNextPlayer(currentPlayer, player1, player2)
+			currentPlayer = g.getNextPlayer(currentPlayer, player1, player2)
 		}
-		this.SetCurrentPlayer(currentPlayer)
-		err = this.makeMove()
+		g.SetCurrentPlayer(currentPlayer)
+		err = g.makeMove()
 		if err != nil && err.Error() == NotEnoughCoinsError {
 			fmt.Println(NotEnoughCoinsErrorMessage)
 		} else if err != nil {
 			fmt.Println(InvalidCommandErrorMessage)
 		}
 	}
-	return this.Result(player1, player2)
+	return g.Result(player1, player2)
 }
 
-func (this *GameRunner) makeMove() error {
-	commandChooseByPlayer, optionalCoinInfo, err := this.getInputFromUser()
+func (g *GameRunner) makeMove() error {
+	commandChooseByPlayer, optionalCoinInfo, err := g.getInputFromUser()
 	if err != nil {
 		return err
 	}
-	return this.Move(inputCommandMap[commandChooseByPlayer], optionalCoinInfo)
+	return g.Move(inputCommandMap[commandChooseByPlayer], optionalCoinInfo)
 }
 
-func (this *GameRunner) getInputFromUser() (string, string, error) {
-	this.printDisplayInputMessage()
-	return this.getInputCommandAndOptionCoinColor()
+func (g *GameRunner) getInputFromUser() (string, string, error) {
+	g.printDisplayInputMessage()
+	return g.getInputCommandAndOptionCoinColor()
 }
 
-func (this *GameRunner) getInputCommandAndOptionCoinColor() (string, string, error) {
+func (g *GameRunner) getInputCommandAndOptionCoinColor() (string, string, error) {
 	var inputCommand string
 	var optionalCoin string
 	_, err := fmt.Scanln(&inputCommand)
@@ -62,8 +62,8 @@ func (this *GameRunner) getInputCommandAndOptionCoinColor() (string, string, err
 	return inputCommand, optionalCoin, err
 }
 
-func (this *GameRunner) printDisplayInputMessage() {
-	fmt.Println(fmt.Sprintf("%s : Choose an outcome from the list below", this.CurrentPlayerName()))
+func (g *GameRunner) printDisplayInputMessage() {
+	fmt.Println(fmt.Sprintf("%s : Choose an outcome from the list below", g.CurrentPlayerName()))
 	fmt.Println("1. Strike")
 	fmt.Println("2. Multistrike")
 	fmt.Println("3. Red strike")
@@ -72,7 +72,7 @@ func (this *GameRunner) printDisplayInputMessage() {
 	fmt.Println("6. None")
 }
 
-func (this *GameRunner) getNextPlayer(current *player.Player, p1 *player.Player, p2 *player.Player) *player.Player {
+func (g *GameRunner) getNextPlayer(current *player.Player, p1 *player.Player, p2 *player.Player) *player.Player {
 	if current == nil {
 		return p1
 	}

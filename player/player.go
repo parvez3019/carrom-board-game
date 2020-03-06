@@ -13,31 +13,31 @@ func NewPlayer(name string) *Player {
 	return &Player{name: name, id: uuid.New().String()}
 }
 
-func (this *Player) UpdateScore(pointsScored int) *Player {
-	this.score += pointsScored
+func (p *Player) UpdateScore(pointsScored int) *Player {
+	p.score += pointsScored
 	if pointsScored > 0 {
-		this.successiveFoulCount = 0
+		p.successiveFoulCount = 0
 	}
-	return this
+	return p
 }
 
-func (this *Player) Foul() *Player {
-	this.successiveFoulCount += 1
-	this.score -= 1
-	if this.successiveFoulCount%3 == 0 {
-		this.score -= 1
+func (p *Player) Foul() *Player {
+	p.successiveFoulCount += 1
+	p.score -= 1
+	if p.successiveFoulCount%3 == 0 {
+		p.score -= 1
 	}
-	return this
+	return p
 }
 
-func (this *Player) Name() string {
-	return this.name
+func (p *Player) Name() string {
+	return p.name
 }
 
-func (this *Player) Score() int {
-	return this.score
+func (p *Player) Score() int {
+	return p.score
 }
 
-func (this *Player) Id() string {
-	return this.id
+func (p *Player) Id() string {
+	return p.id
 }
