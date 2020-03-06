@@ -7,11 +7,11 @@ import (
 )
 
 type GameRunner struct {
-	*CleanStrike
+	*Game
 }
 
-func NewGameRunner(strike *CleanStrike) *GameRunner {
-	return &GameRunner{CleanStrike: strike}
+func NewGameRunner(strike *Game) *GameRunner {
+	return &GameRunner{Game: strike}
 }
 
 func (this *GameRunner) Play(player1 *player.Player, player2 *player.Player) string {
@@ -21,7 +21,8 @@ func (this *GameRunner) Play(player1 *player.Player, player2 *player.Player) str
 		if err == nil {
 			currentPlayer = this.getNextPlayer(currentPlayer, player1, player2)
 		}
-		err = this.makeMoveForPlayer(currentPlayer)
+		this.SetCurrentPlayer(currentPlayer)
+		err = this.makeMove()
 		if err != nil && err.Error() == NotEnoughCoinsError {
 			fmt.Println(NotEnoughCoinsErrorMessage)
 		} else if err != nil {
@@ -31,20 +32,20 @@ func (this *GameRunner) Play(player1 *player.Player, player2 *player.Player) str
 	return this.Result(player1, player2)
 }
 
-func (this *GameRunner) makeMoveForPlayer(player1 *player.Player) error {
-	commandChooseByPlayer, optionalCoinInfo, err := this.getInputFromUser(player1)
+func (this *GameRunner) makeMove() error {
+	commandChooseByPlayer, optionalCoinInfo, err := this.getInputFromUser()
 	if err != nil {
 		return err
 	}
-	return this.Move(player1, inputCommandMap[commandChooseByPlayer], optionalCoinInfo)
+	return this.Move(inputCommandMap[commandChooseByPlayer], optionalCoinInfo)
 }
 
-func (this *GameRunner) getInputFromUser(player *player.Player) (string, string, error) {
-	printDisplayInputMessage(player)
-	return getInputCommandAndOptionCoinColor()
+func (this *GameRunner) getInputFromUser() (string, string, error) {
+	this.printDisplayInputMessage()
+	return this.getInputCommandAndOptionCoinColor()
 }
 
-func getInputCommandAndOptionCoinColor() (string, string, error) {
+func (this *GameRunner) getInputCommandAndOptionCoinColor() (string, string, error) {
 	var inputCommand string
 	var optionalCoin string
 	_, err := fmt.Scanln(&inputCommand)
@@ -61,8 +62,8 @@ func getInputCommandAndOptionCoinColor() (string, string, error) {
 	return inputCommand, optionalCoin, err
 }
 
-func printDisplayInputMessage(player *player.Player) {
-	fmt.Println(fmt.Sprintf("%s : Choose an outcome from the list below", player.Name()))
+func (this *GameRunner) printDisplayInputMessage() {
+	fmt.Println(fmt.Sprintf("%s : Choose an outcome from the list below", this.CurrentPlayerName()))
 	fmt.Println("1. Strike")
 	fmt.Println("2. Multistrike")
 	fmt.Println("3. Red strike")

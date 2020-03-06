@@ -12,7 +12,7 @@ func main() {
 	player1 := player.NewPlayer("Player 1")
 	player2 := player.NewPlayer("Player 2")
 
-	cs := cleanStrike.NewCleanStrike(board)
+	cs := cleanStrike.NewGame(board)
 	gameRunner := cleanStrike.NewGameRunner(cs)
 
 	result := gameRunner.Play(player1, player2)

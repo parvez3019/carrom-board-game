@@ -7,11 +7,11 @@ import (
 	"github.com/magiconair/properties/assert"
 )
 
-func setUpGame(blackCoins int, redCoins int) (*CleanStrike, *player.Player, *player.Player,) {
+func setUpGame(blackCoins int, redCoins int) (*Game, *player.Player, *player.Player,) {
 	board := carrom.NewCarromBoard(blackCoins, redCoins)
 	player1 := player.NewPlayer("Player1")
 	player2 := player.NewPlayer("Player2")
-	game := NewCleanStrike(board)
+	game := NewGame(board)
 
 	return game, player1, player2
 }

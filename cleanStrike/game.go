@@ -8,12 +8,13 @@ import (
 	"fmt"
 )
 
-type CleanStrike struct {
+type Game struct {
 	*carrom.Board
-	commands map[string]func() command.Command
+	commands      map[string]func() command.Command
+	currentPlayer *player.Player
 }
 
-func NewCleanStrike(board *carrom.Board) *CleanStrike {
+func NewGame(board *carrom.Board) *Game {
 	commands := map[string]func() command.Command{
 		STRIKE:        command.NewStrike,
 		MULTISTRIKE:   command.NewMultiStrike,
@@ -22,13 +23,17 @@ func NewCleanStrike(board *carrom.Board) *CleanStrike {
 		DEFUNCTCOIN:   command.NewDefunctCoin,
 		NONE:          command.NewNone,
 	}
-	return &CleanStrike{
-		Board:    board,
-		commands: commands,
+	return &Game{
+		Board:         board,
+		commands:      commands,
 	}
 }
+func (this *Game) SetCurrentPlayer(player *player.Player) *Game {
+	this.currentPlayer = player
+	return this
+}
 
-func (this *CleanStrike) Move(player *player.Player, strike string, optionalCoin string) error {
+func (this *Game) Move(strike string, optionalCoin string) error {
 	command := this.commands[strike]
 	if command == nil {
 		return errors.New("invalid command")
@@ -36,9 +41,9 @@ func (this *CleanStrike) Move(player *player.Player, strike string, optionalCoin
 
 	var err error
 	if strike == DEFUNCTCOIN {
-		err = command().ExecuteWithCoin(player, this.Board, optionalCoin)
+		err = command().ExecuteWithCoin(this.currentPlayer, this.Board, optionalCoin)
 	} else {
-		err = command().Execute(player, this.Board)
+		err = command().Execute(this.currentPlayer, this.Board)
 	}
 	if err != nil {
 		return err
@@ -46,11 +51,15 @@ func (this *CleanStrike) Move(player *player.Player, strike string, optionalCoin
 	return nil
 }
 
-func (this *CleanStrike) CanContinue() bool  {
+func (this *Game) CurrentPlayerName() string  {
+	return this.currentPlayer.Name()
+}
+
+func (this *Game) CanContinue() bool {
 	return !this.HasAllCoinsExhausted()
 }
 
-func (this *CleanStrike) Result(player1 *player.Player, player2 *player.Player) string {
+func (this *Game) Result(player1 *player.Player, player2 *player.Player) string {
 	score1 := player1.Score()
 	score2 := player2.Score()
 
