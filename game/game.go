@@ -61,17 +61,24 @@ func (g *Game) CanContinue() bool {
 }
 
 func (g *Game) Result(player1 *player.Player, player2 *player.Player) string {
-	score1 := player1.Score()
-	score2 := player2.Score()
-
-	const MinimumLeadRequired = 3
-	if score1 >= score2+MinimumLeadRequired && score1 >= 5 {
-		return fmt.Sprintf(GameResultStringFormatter, player1.Name(), score1, score2)
-	} else if score2 >= score1+MinimumLeadRequired && score2 >= 5 {
-		return fmt.Sprintf(GameResultStringFormatter, player2.Name(), score2, score1)
+	winner, loser,  draw := findWinner(player1, player2)
+	if draw {
+		return DrawResultString
 	}
-	return GameDrawString
+	return fmt.Sprintf(ResultStringFormatter, winner.Name() , winner.Score(), loser.Score())
 }
 
-const GameDrawString = "Game is draw"
-const GameResultStringFormatter = "%s won the game. Final Score: %d : %d"
+func findWinner(player1 *player.Player, player2 *player.Player) (*player.Player, *player.Player, bool) {
+	const MinimumLeadRequired = 3
+	const MinPointsRequiredToWin = 5
+	if player1.Score() >= player2.Score() + MinimumLeadRequired && player1.Score() >= MinPointsRequiredToWin {
+		return player1, player2, false
+	}
+	if player2.Score() >= player1.Score() + MinimumLeadRequired && player2.Score() >= MinPointsRequiredToWin {
+		return player2, player1, false
+	}
+	return nil, nil, true
+}
+
+const DrawResultString = "Game is draw"
+const ResultStringFormatter = "%s won the game. Final Score: %d : %d"
